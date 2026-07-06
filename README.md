@@ -4,7 +4,7 @@ A full-stack quiz web app where users are shown a 2026 World Cup player and must
 
 ## Links
 
-- **GitHub Repository:** _(add your repo URL after pushing)_
+- **GitHub Repository:** https://github.com/sontran2204/github-demo-guessing-wc-player
 - **Live Demo:** _(add your hosted URL after deploying)_
 
 ## Features

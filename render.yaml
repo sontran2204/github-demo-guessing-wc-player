@@ -2,7 +2,7 @@ services:
   - type: web
     name: world-cup-player-guess
     runtime: node
-    buildCommand: npm install && npm run build -w backend && npm run build -w frontend && cd backend && npx prisma generate && npx prisma migrate deploy && npm run import:players
+    buildCommand: npm install && npm run build -w backend && npm run build -w frontend && cd backend && npx prisma generate && npx prisma migrate deploy && npm run import:players && npm run classify:players
     startCommand: npm run start -w backend
     envVars:
       - key: NODE_ENV
