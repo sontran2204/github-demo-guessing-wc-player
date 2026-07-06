@@ -32,8 +32,13 @@ export function QuizQuestion({ question, onSelect, disabled, selectedId, feedbac
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-col items-center text-center gap-4 pb-1">
-        <PlayerAvatar name={player.name} imageUrl={player.imageUrl} size="xl" />
+      <div className="flex flex-col items-center text-center gap-3 pb-1">
+        <PlayerAvatar
+          name={player.name}
+          imageUrl={player.imageUrl}
+          size={feedback ? "lg" : "xl"}
+          zoomable={!feedback}
+        />
         <div className="space-y-1">
           <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-slate-400">
             Which country does

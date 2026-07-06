@@ -170,11 +170,14 @@ export default function App() {
                 }
               />
               {phase === "feedback" && lastResult && (
-                <FeedbackBanner
-                  result={lastResult}
-                  onNext={handleNext}
-                  isLast={questionIndex + 1 >= TOTAL_QUESTIONS}
-                />
+                <>
+                  <div className="h-40 sm:h-36" aria-hidden />
+                  <FeedbackBanner
+                    result={lastResult}
+                    onNext={handleNext}
+                    isLast={questionIndex + 1 >= TOTAL_QUESTIONS}
+                  />
+                </>
               )}
             </>
           )}
