@@ -11,6 +11,7 @@
     "db:deploy": "prisma migrate deploy",
     "import:players": "tsx scripts/import-players.ts",
     "import:images": "tsx scripts/import-player-images.ts",
+    "export:quiz-data": "tsx scripts/export-quiz-data.ts",
     "fix:mangled": "tsx scripts/fix-mangled-players.ts",
     "normalize:images": "tsx scripts/normalize-image-urls.ts",
     "classify:players": "tsx scripts/classify-players.ts"

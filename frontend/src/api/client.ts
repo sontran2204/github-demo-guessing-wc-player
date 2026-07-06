@@ -1,3 +1,5 @@
+import { localFetchQuestion, localFetchStats, localSubmitAnswer } from "../services/localQuiz";
+
 export interface CountryOption {
   id: number;
   name: string;
@@ -29,6 +31,7 @@ export interface AnswerResponse {
 
 export type Difficulty = "easy" | "medium" | "hard";
 
+const USE_LOCAL_DATA = import.meta.env.VITE_USE_LOCAL_DATA === "true";
 const API_BASE = "/api";
 
 export const DIFFICULTY_LABELS: Record<
@@ -72,6 +75,10 @@ export async function fetchQuestion(
   excludeIds: number[],
   difficulty: Difficulty = "medium"
 ): Promise<QuestionResponse> {
+  if (USE_LOCAL_DATA) {
+    return localFetchQuestion(excludeIds, difficulty);
+  }
+
   const params = new URLSearchParams({ difficulty });
   if (excludeIds.length > 0) params.set("exclude", excludeIds.join(","));
   const response = await fetch(`${API_BASE}/quiz/question?${params}`);
@@ -82,6 +89,10 @@ export async function submitAnswer(
   playerId: number,
   selectedCountryId: number
 ): Promise<AnswerResponse> {
+  if (USE_LOCAL_DATA) {
+    return localSubmitAnswer(playerId, selectedCountryId);
+  }
+
   const response = await fetch(`${API_BASE}/quiz/answer`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -91,6 +102,10 @@ export async function submitAnswer(
 }
 
 export async function fetchStats(): Promise<QuizStats> {
+  if (USE_LOCAL_DATA) {
+    return localFetchStats();
+  }
+
   const response = await fetch(`${API_BASE}/health`);
   return handleResponse(response);
 }

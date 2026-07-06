@@ -5,7 +5,7 @@ A full-stack quiz web app where users are shown a 2026 World Cup player and must
 ## Links
 
 - **GitHub Repository:** https://github.com/sontran2204/github-demo-guessing-wc-player
-- **Live Demo:** _(add your hosted URL after deploying)_
+- **Live Demo:** https://sontran2204.github.io/github-demo-guessing-wc-player/
 
 ## Features
 
@@ -110,55 +110,43 @@ npm run dev
         └── components/         # UI components
 ```
 
-## Deployment (Render + GitHub)
+## Deployment (GitHub Pages — recommended)
+
+The app deploys as a **static site on GitHub Pages**. Quiz data is bundled in `frontend/public/data/quiz-data.json` (no backend server needed online).
 
 ### 1. Push to GitHub
 
 ```bash
-cd "/path/to/Guess WC plaỷe"
-git init
 git add .
-git commit -m "Add World Cup Player Guess quiz app"
-git remote add origin https://github.com/YOUR_USERNAME/world-cup-player-guess.git
-git push -u origin main
+git commit -m "Deploy World Cup Player Guess"
+git push origin main
 ```
 
-### 2. Create PostgreSQL database
+### 2. Enable GitHub Pages
 
-Create a free PostgreSQL database on [Neon](https://neon.tech) or [Supabase](https://supabase.com). Copy the connection string.
+1. Open https://github.com/sontran2204/github-demo-guessing-wc-player/settings/pages
+2. Under **Build and deployment → Source**, choose **GitHub Actions**
+3. After the workflow runs, your site is live at:
 
-### 3. Update Prisma for production
+**https://sontran2204.github.io/github-demo-guessing-wc-player/**
 
-In `backend/prisma/schema.prisma`, change the datasource provider:
+Each push to `main` triggers automatic redeploy via `.github/workflows/deploy-pages.yml`.
 
-```prisma
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-```
-
-Then create a new migration:
+### 3. Refresh quiz data (after local DB changes)
 
 ```bash
-cd backend
-DATABASE_URL="your-postgres-url" npx prisma migrate dev --name postgres
+npm run import:players
+npm run classify:players
+npm run import:images   # optional
+npm run export:quiz-data
+git add frontend/public/data/quiz-data.json
+git commit -m "Update quiz data"
+git push
 ```
 
-### 4. Deploy on Render
+## Local development with API (optional)
 
-1. Create a new **Web Service** on [Render](https://render.com)
-2. Connect your GitHub repository
-3. Configure:
-   - **Build Command:** `npm install && npm run build -w backend && npm run build -w frontend && cd backend && npx prisma generate && npx prisma migrate deploy && npm run import:players`
-   - **Start Command:** `npm run start -w backend`
-   - **Environment Variables:**
-     - `DATABASE_URL` — your PostgreSQL connection string
-     - `ZAFRONIX_API_KEY` — your Zafronix API key (optional; fallback works without it)
-     - `NODE_ENV=production`
-4. Deploy and copy the public URL into this README
-
-In production, the Express server serves the built frontend from `frontend/dist`.
+For local dev with Express + SQLite, use `npm run dev` as usual. GitHub Pages uses client-side quiz data instead.
 
 ## Scripts
 
@@ -169,6 +157,8 @@ In production, the Express server serves the built frontend from `frontend/dist`
 | `npm run db:migrate` | Run Prisma migrations |
 | `npm run import:players` | Fetch and import player data |
 | `npm run import:images` | Fetch and import player photos |
+| `npm run export:quiz-data` | Export JSON for GitHub Pages |
+| `npm run classify:players` | Classify easy/medium/hard tiers |
 
 ## License
 
