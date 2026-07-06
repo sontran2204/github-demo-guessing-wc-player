@@ -1,0 +1,19 @@
+{
+  "name": "world-cup-player-guess",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "build": "npm run build -w backend && npm run build -w frontend",
+    "db:migrate": "npm run db:migrate -w backend",
+    "import:players": "npm run import:players -w backend",
+    "import:images": "npm run import:images -w backend",
+    "fix:mangled": "npm run fix:mangled -w backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

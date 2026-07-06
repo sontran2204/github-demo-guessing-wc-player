@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Country {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  code    String?
+  flagUrl String?
+  players Player[]
+}
+
+model Player {
+  id         Int     @id @default(autoincrement())
+  name       String
+  position   String?
+  club       String?
+  jersey     Int?
+  imageUrl   String?
+  difficulty String  @default("medium")
+  countryId  Int
+  externalId String?
+  country    Country @relation(fields: [countryId], references: [id])
+
+  @@unique([name, countryId])
+  @@index([difficulty])
+}
